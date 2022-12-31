@@ -17,22 +17,22 @@ export interface ServiceGroup {
 }
 
 // Un servicio tiene un detalle cuando se utiliza
-export interface ServiceDetail {
+export interface Detail {
   readonly serviceId: number;
   quantity: number | "";
   total: number;
 }
 
 // Los detalles de un servicio se almacenan en un grupo de detalles
-export interface ServiceGroupDetail {
+export interface DetailGroup {
   readonly serviceGroupId: number;
-  serviceDetails?: Array<ServiceDetail>;
+  details: Array<Detail>;
   total: number;
 }
 
 // Un detalle diario guarda los grupos de detalles
 export interface DailyDetail {
-  serviceGroupDetails: Array<ServiceGroupDetail>;
+  groupDetails: Array<DetailGroup>;
   total: number;
   date: Date;
 }

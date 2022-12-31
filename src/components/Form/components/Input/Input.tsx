@@ -1,52 +1,61 @@
 import "./Input.scss";
-import { Service, ServiceDetail } from "../../../../types";
+import { Service, Detail } from "../../../../types";
 import { useState } from "react";
 
 interface InputProps {
   service: Service;
   key: string;
-  addServiceDetails(serviceDetails: ServiceDetail): void;
-  serviceDetail: ServiceDetail | undefined;
+  addDetail(detail: Detail): void;
+  detailValues: Detail | undefined;
 }
 
-const InputSection = ({
-  service,
-  serviceDetail,
-  addServiceDetails,
-}: InputProps) => {
-  const DEFAULT_STATE: ServiceDetail = {
+const InputSection = ({ service, detailValues, addDetail }: InputProps) => {
+  const DEFAULT_STATE: Detail = {
     serviceId: service.id,
     quantity: "",
     total: 0,
   };
   const initialState =
-    serviceDetail !== undefined ? serviceDetail : DEFAULT_STATE;
+    detailValues !== undefined ? detailValues : DEFAULT_STATE;
 
-  const [serviceDetailValues, setServiceDetailValues] =
-    useState<ServiceDetail>(initialState);
+  const [detail, setDetail] = useState<Detail>(initialState);
+
+  const validateInput = (input: string): number => {
+    if (input === "" || null || undefined) {
+      return 0;
+    } else {
+      try {
+        return parseInt(input);
+      } catch (error) {
+        return 0;
+      }
+    }
+  };
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>): void => {
     const { value } = e.target;
-    const total = value !== "" ? parseInt(value) * service.price : 0;
-    setServiceDetailValues({
-      ...serviceDetailValues,
-      quantity: parseInt(value),
+    const quantity = validateInput(value);
+    const total = quantity * service.price;
+    const detailUpdated: Detail = {
+      ...detail,
+      quantity: quantity,
       total: total,
-    });
-    addServiceDetails(serviceDetailValues);
+    };
+    setDetail(detailUpdated);
+    addDetail(detailUpdated);
   };
 
   return (
     <div className="input-section">
       <label htmlFor="">
-        {service.text} - ${serviceDetailValues.total}
+        {service.text} - ${detail.total}
       </label>
       <input
         type="number"
         min={0}
         max={1000}
         required={true}
-        value={serviceDetailValues?.quantity}
+        value={detail?.quantity}
         onChange={handleChange}
       />
     </div>
