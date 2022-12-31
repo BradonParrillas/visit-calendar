@@ -15,7 +15,7 @@ const months = [
 
 export const formattedDate = (date: Date) => {
   return {
-    day: date.getDay(),
+    day: date.getDate(),
     month: months[date.getMonth()],
     year: date.getFullYear(),
   };

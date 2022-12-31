@@ -5,9 +5,13 @@ import { CalendarTileProperties } from "react-calendar";
 
 interface SectionCalendarProps {
   showForm(): void;
+  setDateSelected(date: Date): void;
 }
 
-const SectionCalendar = ({ showForm }: SectionCalendarProps) => {
+const SectionCalendar = ({
+  showForm,
+  setDateSelected,
+}: SectionCalendarProps) => {
   const [value, onChange] = useState<Date>(new Date());
 
   const setTileContent = (
@@ -33,6 +37,7 @@ const SectionCalendar = ({ showForm }: SectionCalendarProps) => {
       )
     ) {
       console.log("Select day: ", value);
+      setDateSelected(value);
       showForm();
     }
   };

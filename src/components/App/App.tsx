@@ -2,16 +2,26 @@ import React, { useState } from "react";
 import "./App.scss";
 import CalendarSection from "../CalendarSection/CalendarSection";
 import Form from "../Form/Form";
+import { UserConfig } from "../../types";
+import { getUserConfig } from "../../services/storage";
 
 function App() {
   const [formOpened, setFormOpened] = useState<boolean>(false);
-  const [date, setDate] = useState<Date>(new Date());
+  const [dateSelected, setDateSelectedApp] = useState<Date>(new Date());
+  const [userConfig, setUserConfig] = useState<UserConfig>(getUserConfig());
 
   return (
     <div className="App">
-      <CalendarSection showForm={() => setFormOpened(true)} />
+      <CalendarSection
+        showForm={() => setFormOpened(true)}
+        setDateSelected={(date: Date) => setDateSelectedApp(date)}
+      />
       {formOpened && (
-        <Form closeForm={() => setFormOpened(false)} date={date} />
+        <Form
+          closeForm={() => setFormOpened(false)}
+          date={dateSelected}
+          serviceGroups={userConfig.serviceGroups}
+        />
       )}
     </div>
   );
