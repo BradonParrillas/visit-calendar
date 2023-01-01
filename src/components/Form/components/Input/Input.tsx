@@ -51,7 +51,9 @@ const InputSection = ({ service, detailValues, addDetail }: InputProps) => {
       <td>
         <label htmlFor={service.name}>{service.text}</label>
       </td>
-      <td>{dollarFormat.format(service.price)}</td>
+      <td>
+        {service.price === 0 ? "GRATIS" : dollarFormat.format(service.price)}
+      </td>
       <td>
         <input
           name={service.name}
