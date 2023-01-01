@@ -3,6 +3,7 @@ import { ServiceGroup, DetailGroup, Detail } from "../../../../types";
 import InputSection from "../Input/Input";
 import { useState } from "react";
 import printWithColor from "../../../../utilities/printWithColor";
+import { dollarFormat } from "../../../../utilities/currencyFormat";
 
 interface FormGroupProps {
   serviceGroup: ServiceGroup;
@@ -52,10 +53,14 @@ const FormGroup = ({ serviceGroup, detailGroupValues }: FormGroupProps) => {
   };
 
   return (
-    <div className="form-group">
-      <h3>
-        {serviceGroup.text} - ${detailGroup.total}
-      </h3>
+    <>
+      <tr>
+        <th>{serviceGroup.text}</th>
+        <th>Precio</th>
+        <th>cantidad</th>
+        <th>Total</th>
+      </tr>
+
       {serviceGroup.services.map(
         (service) =>
           service.active && (
@@ -70,7 +75,15 @@ const FormGroup = ({ serviceGroup, detailGroupValues }: FormGroupProps) => {
             />
           )
       )}
-    </div>
+      <tr className="total">
+        <td colSpan={3}>Total</td>
+        <td>
+          {detailGroup.total === 0
+            ? ""
+            : dollarFormat.format(detailGroup.total)}
+        </td>
+      </tr>
+    </>
   );
 };
 

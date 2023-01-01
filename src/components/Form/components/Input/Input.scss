@@ -1,0 +1,21 @@
+.input-section {
+  margin: 5px;
+  position: relative;
+  border-bottom: 1px solid black;
+
+  label {
+    font-weight: 500;
+    font-size: 0.8rem;
+  }
+
+
+  input {
+    padding: 5px;
+    width: 100%;
+    color: var(--color-11);
+    grid-area: input;
+    border: none;
+    //border-bottom: 1px solid black;
+    outline: none;
+  }
+}

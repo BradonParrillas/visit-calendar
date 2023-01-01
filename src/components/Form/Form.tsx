@@ -25,19 +25,29 @@ const Form = ({ closeForm, date, serviceGroups }: FormProps) => {
         <button id="btn-close-form" onClick={() => closeForm()}>
           x
         </button>
-        <form action="" className="Form" onSubmit={handleSubmit}>
-          <h3>{`${dateSelected.day} de ${dateSelected.month} del ${dateSelected.year}`}</h3>
-          <div>
-            {serviceGroups.map(
-              (group) =>
-                group.active && (
-                  <FormGroup
-                    serviceGroup={group}
-                    key={`group-${group.id}-${group.name}`}
-                  />
-                )
-            )}
-          </div>
+        <form action="" className="form" onSubmit={handleSubmit}>
+          <table>
+            <thead>
+              <tr>
+                <th>
+                  <h3>{`${dateSelected.day} de ${dateSelected.month} del ${dateSelected.year}`}</h3>
+                </th>
+              </tr>
+            </thead>
+            <div className="scroll">
+              <tbody>
+                {serviceGroups.map(
+                  (group) =>
+                    group.active && (
+                      <FormGroup
+                        serviceGroup={group}
+                        key={`group-${group.id}-${group.name}`}
+                      />
+                    )
+                )}
+              </tbody>
+            </div>
+          </table>
           <button type="submit">Guardar</button>
         </form>
       </div>

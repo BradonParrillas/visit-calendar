@@ -17,7 +17,7 @@ export const serviceGroups: ServiceGroup[] = [
       {
         id: 2,
         name: "extranjeros",
-        text: "Nacionales",
+        text: "Extranjeros",
         price: 6.0,
         active: true,
       },

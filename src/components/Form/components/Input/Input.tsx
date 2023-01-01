@@ -1,6 +1,7 @@
 import "./Input.scss";
 import { Service, Detail } from "../../../../types";
 import { useState } from "react";
+import { dollarFormat } from "../../../../utilities/currencyFormat";
 
 interface InputProps {
   service: Service;
@@ -46,19 +47,24 @@ const InputSection = ({ service, detailValues, addDetail }: InputProps) => {
   };
 
   return (
-    <div className="input-section">
-      <label htmlFor="">
-        {service.text} - ${detail.total}
-      </label>
-      <input
-        type="number"
-        min={0}
-        max={1000}
-        required={true}
-        value={detail?.quantity}
-        onChange={handleChange}
-      />
-    </div>
+    <tr className="input-section">
+      <td>
+        <label htmlFor={service.name}>{service.text}</label>
+      </td>
+      <td>{dollarFormat.format(service.price)}</td>
+      <td>
+        <input
+          name={service.name}
+          type="number"
+          min={0}
+          max={1000}
+          required={true}
+          value={detail?.quantity === 0 ? "" : detail.quantity}
+          onChange={handleChange}
+        />
+      </td>
+      <td>{detail.total === 0 ? "" : dollarFormat.format(detail.total)}</td>
+    </tr>
   );
 };
 
