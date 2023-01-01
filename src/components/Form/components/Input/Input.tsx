@@ -6,11 +6,15 @@ import { dollarFormat } from "../../../../utilities/currencyFormat";
 interface InputProps {
   service: Service;
   key: string;
-  addDetail(detail: Detail): void;
+  updateDetailGroup(detail: Detail): void;
   detailValues: Detail | undefined;
 }
 
-const InputSection = ({ service, detailValues, addDetail }: InputProps) => {
+const InputSection = ({
+  service,
+  detailValues,
+  updateDetailGroup,
+}: InputProps) => {
   const DEFAULT_STATE: Detail = {
     serviceId: service.id,
     quantity: "",
@@ -44,7 +48,7 @@ const InputSection = ({ service, detailValues, addDetail }: InputProps) => {
         total: total,
       };
       setDetail(detailUpdated);
-      addDetail(detailUpdated);
+      updateDetailGroup(detailUpdated);
     } else {
       const detailUpdated: Detail = {
         ...detail,

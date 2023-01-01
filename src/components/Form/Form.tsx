@@ -3,20 +3,38 @@ import "./Form.scss";
 import { formattedDate } from "../../utilities/dateFormating";
 import { ServiceGroup, DailyDetail } from "../../types";
 import FormGroup from "./components/FormGroup/FormGroup";
+import printWithColor from "../../utilities/printWithColor";
 
 interface FormProps {
-  date: Date;
+  dateValue: Date; //! Quitar
   serviceGroups: Array<ServiceGroup>;
   closeForm(): void;
-  dailyDetail?: DailyDetail;
+  dailyDetailValues?: DailyDetail;
 }
 
-const Form = ({ closeForm, date, serviceGroups }: FormProps) => {
-  const [values, setValues] = useState();
-  const dateSelected = formattedDate(date); // ?2 opc, cuando el valor venga de un detalle
+const Form = ({
+  closeForm,
+  dateValue,
+  serviceGroups,
+  dailyDetailValues,
+}: FormProps) => {
+  const DEFAULT_STATE: DailyDetail = {
+    date: dateValue,
+    groupDetails: [],
+    total: 0,
+  };
+  const initialState: DailyDetail =
+    dailyDetailValues !== undefined ? dailyDetailValues : DEFAULT_STATE;
+
+  const [dailyDetail, setDailyDetail] = useState(initialState);
+
+  const dateSelected = formattedDate(dailyDetail.date); // ?2 opc, cuando el valor venga de un detalle
 
   const handleSubmit = (evt: React.FormEvent<HTMLFormElement>): void => {
     evt.preventDefault();
+
+    printWithColor("daily detail saved", "gray");
+    console.log(dailyDetail);
   };
 
   return (

@@ -23,7 +23,7 @@ const FormGroup = ({ serviceGroup, detailGroupValues }: FormGroupProps) => {
 
   const [detailGroup, setdetailGroup] = useState<DetailGroup>(initialState);
 
-  const updateDetails = (detail: Detail): void => {
+  const updateDetailGroup = (detail: Detail): void => {
     let newDetails: Array<Detail> = [];
 
     if (detailGroup.details.length !== 0) {
@@ -71,7 +71,7 @@ const FormGroup = ({ serviceGroup, detailGroupValues }: FormGroupProps) => {
               detailValues={detailGroup.details.find(
                 (detail) => detail.serviceId === service.id
               )}
-              addDetail={updateDetails}
+              updateDetailGroup={updateDetailGroup}
             />
           )
       )}

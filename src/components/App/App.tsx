@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import "./App.scss";
 import CalendarSection from "../CalendarSection/CalendarSection";
 import Form from "../Form/Form";
-import { UserConfig } from "../../types";
+import { UserConfig, DailyDetail } from "../../types";
 import { getUserConfig } from "../../services/storage";
 
 function App() {
@@ -19,7 +19,7 @@ function App() {
       {formOpened && (
         <Form
           closeForm={() => setFormOpened(false)}
-          date={dateSelected}
+          dateValue={dateSelected} //! pasar este valor en el dailyDetail
           serviceGroups={userConfig.serviceGroups}
         />
       )}

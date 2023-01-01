@@ -19,7 +19,7 @@ export interface ServiceGroup {
 // Un servicio tiene un detalle cuando se utiliza
 export interface Detail {
   readonly serviceId: number;
-  quantity: number | "";
+  quantity: number | ""; // permite los string vacios, ya que este se utiliza para recuperar los valores de un input(devuelve "" cuando no hay nada en el campo)
   total: number;
 }
 
