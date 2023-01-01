@@ -35,15 +35,24 @@ const InputSection = ({ service, detailValues, addDetail }: InputProps) => {
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>): void => {
     const { value } = e.target;
-    const quantity = validateInput(value);
-    const total = quantity * service.price;
-    const detailUpdated: Detail = {
-      ...detail,
-      quantity: quantity,
-      total: total,
-    };
-    setDetail(detailUpdated);
-    addDetail(detailUpdated);
+    if (value !== "" || null || undefined) {
+      const quantity = validateInput(value);
+      const total = quantity * service.price;
+      const detailUpdated: Detail = {
+        ...detail,
+        quantity: quantity,
+        total: total,
+      };
+      setDetail(detailUpdated);
+      addDetail(detailUpdated);
+    } else {
+      const detailUpdated: Detail = {
+        ...detail,
+        quantity: "",
+        total: 0,
+      };
+      setDetail(detailUpdated);
+    }
   };
 
   return (
@@ -61,7 +70,7 @@ const InputSection = ({ service, detailValues, addDetail }: InputProps) => {
           min={0}
           max={1000}
           required={true}
-          value={detail?.quantity === 0 ? "" : detail.quantity}
+          value={detail.quantity}
           onChange={handleChange}
         />
       </td>

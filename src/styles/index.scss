@@ -41,6 +41,27 @@
   box-sizing: border-box;
   margin: 0;
   padding: 0;
+
+  &::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+    background-color: transparent;
+
+    &-button {
+      //display: none;
+    }
+
+    &-thumb {
+      background-color: var(--color-2);
+      border-radius: 4px;
+      opacity: 0;
+    }
+  }
+
+  &::-webkit-scrollbar-button {
+    height: 0;
+    background-color: black;
+  }
 }
 
 body,
