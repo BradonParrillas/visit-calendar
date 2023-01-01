@@ -9,9 +9,11 @@
   align-items: center;
   user-select: none;
 
-  &>div {
+  &>div.form-container {
     min-height: 40vh;
+    max-height: 100vh;
     max-width: 60vw;
+    margin: 2rem 0 2rem 0;
     background-color: var(--color-4);
     border-radius: 2rem;
     box-shadow: 0px 0px 13px 3px rgb(0 0 0 / 17%);
@@ -46,6 +48,7 @@ form {
   flex-direction: column;
   align-items: center;
   margin: 1.5rem;
+  background-color: none;
 
   table {
     font-weight: 500;
@@ -62,6 +65,10 @@ form {
       td {
         border-bottom: 1px solid var(--color-5);
         padding: 5px 5px 0 5px;
+
+        &.total {
+          width: 10rem;
+        }
       }
 
       &.total {
@@ -76,7 +83,7 @@ form {
   }
 
   .scroll {
-    height: 50vh;
-    overflow-y: scroll;
+    height: 80vh;
+    overflow-y: auto;
   }
 }

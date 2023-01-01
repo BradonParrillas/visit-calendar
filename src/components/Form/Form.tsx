@@ -21,7 +21,7 @@ const Form = ({ closeForm, date, serviceGroups }: FormProps) => {
 
   return (
     <section className="section-form">
-      <div>
+      <div className="form-container">
         <button id="btn-close-form" onClick={() => closeForm()}>
           x
         </button>

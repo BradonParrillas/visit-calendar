@@ -48,13 +48,13 @@ const InputSection = ({ service, detailValues, addDetail }: InputProps) => {
 
   return (
     <tr className="input-section">
-      <td>
+      <td className="service">
         <label htmlFor={service.name}>{service.text}</label>
       </td>
-      <td>
+      <td className="price">
         {service.price === 0 ? "GRATIS" : dollarFormat.format(service.price)}
       </td>
-      <td>
+      <td className="quantity">
         <input
           name={service.name}
           type="number"
@@ -65,7 +65,9 @@ const InputSection = ({ service, detailValues, addDetail }: InputProps) => {
           onChange={handleChange}
         />
       </td>
-      <td>{detail.total === 0 ? "" : dollarFormat.format(detail.total)}</td>
+      <td className="total">
+        {detail.total === 0 ? "" : dollarFormat.format(detail.total)}
+      </td>
     </tr>
   );
 };
