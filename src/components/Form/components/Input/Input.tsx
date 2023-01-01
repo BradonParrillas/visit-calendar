@@ -75,7 +75,7 @@ const InputSection = ({ service, detailValues, addDetail }: InputProps) => {
         />
       </td>
       <td className="total">
-        {detail.total === 0 ? "" : dollarFormat.format(detail.total)}
+        {detail.quantity !== "" ? dollarFormat.format(detail.total) : ""}
       </td>
     </tr>
   );
