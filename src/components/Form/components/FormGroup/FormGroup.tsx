@@ -8,10 +8,15 @@ import { dollarFormat } from "../../../../utilities/currencyFormat";
 interface FormGroupProps {
   serviceGroup: ServiceGroup;
   key: string;
-  detailGroupValues?: DetailGroup;
+  detailGroupValues: DetailGroup | undefined;
+  updateDailyDetail(detailGroup: DetailGroup): void;
 }
 
-const FormGroup = ({ serviceGroup, detailGroupValues }: FormGroupProps) => {
+const FormGroup = ({
+  serviceGroup,
+  detailGroupValues,
+  updateDailyDetail,
+}: FormGroupProps) => {
   const DEFAULT_STATE: DetailGroup = {
     serviceGroupId: serviceGroup.id,
     total: 0,
@@ -42,6 +47,7 @@ const FormGroup = ({ serviceGroup, detailGroupValues }: FormGroupProps) => {
     setdetailGroup(detailGroupUpdated);
     printWithColor(`grupo ${serviceGroup.name} actualizado`, "aquamarine");
     console.log(detailGroupUpdated);
+    updateDailyDetail(detailGroupUpdated);
     // printWithColor(`con el servicio`, "aquamarine");
     // console.log(detail);
   };

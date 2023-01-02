@@ -1,15 +1,16 @@
 import { useState } from "react";
 import "./Form.scss";
 import { formattedDate } from "../../utilities/dateFormating";
-import { ServiceGroup, DailyDetail } from "../../types";
+import { ServiceGroup, DailyDetail, DetailGroup } from "../../types";
 import FormGroup from "./components/FormGroup/FormGroup";
 import printWithColor from "../../utilities/printWithColor";
 
 interface FormProps {
-  dateValue: Date; //! Quitar
+  dateValue: Date;
   serviceGroups: Array<ServiceGroup>;
   closeForm(): void;
-  dailyDetailValues?: DailyDetail;
+  dailyDetailValues: DailyDetail | undefined;
+  updateAllDailyDetails(dailyDetail: DailyDetail): void;
 }
 
 const Form = ({
@@ -17,6 +18,7 @@ const Form = ({
   dateValue,
   serviceGroups,
   dailyDetailValues,
+  updateAllDailyDetails,
 }: FormProps) => {
   const DEFAULT_STATE: DailyDetail = {
     date: dateValue,
@@ -28,13 +30,40 @@ const Form = ({
 
   const [dailyDetail, setDailyDetail] = useState(initialState);
 
-  const dateSelected = formattedDate(dailyDetail.date); // ?2 opc, cuando el valor venga de un detalle
+  const calculateTotal = (detailGroups: Array<DetailGroup>): number => {
+    let total = 0;
+    detailGroups.forEach((group) => (total += group.total));
+    return total;
+  };
+
+  const updateDailyDetail = (detailGroup: DetailGroup): void => {
+    let newDetailGroups: Array<DetailGroup> = [];
+
+    if (dailyDetail.groupDetails.length !== 0) {
+      newDetailGroups = dailyDetail.groupDetails.filter(
+        (detailItem) => detailItem.serviceGroupId !== detailGroup.serviceGroupId
+      );
+      newDetailGroups.push(detailGroup);
+    } else {
+      newDetailGroups.push(detailGroup);
+    }
+
+    const dailyDetailUpdated: DailyDetail = {
+      ...dailyDetail,
+      groupDetails: newDetailGroups,
+      total: calculateTotal(newDetailGroups),
+    };
+    setDailyDetail(dailyDetailUpdated);
+    printWithColor(`daily detail actualizado`, "pink");
+    //console.log(dailyDetailUpdated);
+  };
 
   const handleSubmit = (evt: React.FormEvent<HTMLFormElement>): void => {
     evt.preventDefault();
-
+    updateAllDailyDetails(dailyDetail);
     printWithColor("daily detail saved", "gray");
     console.log(dailyDetail);
+    closeForm();
   };
 
   return (
@@ -48,7 +77,9 @@ const Form = ({
             <thead>
               <tr>
                 <th>
-                  <h3>{`${dateSelected.day} de ${dateSelected.month} del ${dateSelected.year}`}</h3>
+                  <h3>{`${formattedDate(dailyDetail.date).day} de ${
+                    formattedDate(dailyDetail.date).month
+                  } del ${formattedDate(dailyDetail.date).year}`}</h3>
                 </th>
               </tr>
             </thead>
@@ -60,6 +91,11 @@ const Form = ({
                       <FormGroup
                         serviceGroup={group}
                         key={`group-${group.id}-${group.name}`}
+                        detailGroupValues={dailyDetail.groupDetails.find(
+                          (detailGroup) =>
+                            detailGroup.serviceGroupId === group.id
+                        )}
+                        updateDailyDetail={updateDailyDetail}
                       />
                     )
                 )}
