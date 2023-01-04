@@ -37,6 +37,7 @@ function App() {
       <CalendarSection
         showForm={() => setFormOpened(true)}
         setDateSelected={(date: Date) => setDateSelectedApp(date)}
+        dailyDetails={dailyDetails}
       />
       {formOpened && (
         <Form

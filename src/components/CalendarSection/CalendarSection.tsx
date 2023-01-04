@@ -2,15 +2,20 @@ import "./CalendarSection.scss";
 import Calendar from "react-calendar";
 import React, { useState } from "react";
 import { CalendarTileProperties } from "react-calendar";
+import { DailyDetail } from "../../types";
+import { getDailyDetails } from "../../services/storage";
+import { formattedDate } from "../../utilities/dateFormating";
 
 interface SectionCalendarProps {
   showForm(): void;
   setDateSelected(date: Date): void;
+  dailyDetails: Array<DailyDetail>;
 }
 
 const SectionCalendar = ({
   showForm,
   setDateSelected,
+  dailyDetails,
 }: SectionCalendarProps) => {
   const [value, onChange] = useState<Date>(new Date());
 
@@ -18,10 +23,14 @@ const SectionCalendar = ({
     tileProps: CalendarTileProperties
   ): JSX.Element | null => {
     if (tileProps.view === "month") {
-      if (tileProps.date.getDay() === 0) {
-        return <p>It's Sunday!</p>;
+      const dailyDetail = dailyDetails.find(
+        (detail) =>
+          formattedDate(detail.date).full === formattedDate(tileProps.date).full
+      );
+      if (dailyDetail) {
+        return <p>{dailyDetail.total}</p>;
       }
-      return null;
+      //}
     }
     return null;
   };
