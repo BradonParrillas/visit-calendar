@@ -30,6 +30,7 @@ function App() {
     newDailyDetails.push(newDailyDetail);
 
     saveDailyDetails(newDailyDetail.date, newDailyDetails);
+    window.location.reload();
   };
 
   return (

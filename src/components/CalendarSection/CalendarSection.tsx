@@ -5,6 +5,8 @@ import { CalendarTileProperties } from "react-calendar";
 import { DailyDetail } from "../../types";
 import { getDailyDetails } from "../../services/storage";
 import { formattedDate } from "../../utilities/dateFormating";
+import CalendarLabel from "./Components/CalendarLabel/CalendarLabel";
+import { dollarFormat } from "../../utilities/currencyFormat";
 
 interface SectionCalendarProps {
   showForm(): void;
@@ -28,7 +30,11 @@ const SectionCalendar = ({
           formattedDate(detail.date).full === formattedDate(tileProps.date).full
       );
       if (dailyDetail) {
-        return <p>{dailyDetail.total}</p>;
+        return (
+          <CalendarLabel>
+            {dollarFormat.format(dailyDetail.total)}
+          </CalendarLabel>
+        );
       }
       //}
     }
